@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>zookeeper</title>
+      <link href="/2019/08/13/zookeeper/"/>
+      <url>/2019/08/13/zookeeper/</url>
+      
+        <content type="html"><![CDATA[<p>Zookeeper：</p><pre><code>分布式系统：是一个硬件或软件组建分布在网络中的不同计算机之上，彼此间仅通过消息传递进行通信和协作的系统特性：    分布式、对等性、并发性、缺乏全局时钟、故障必然会发生典型问题        通信异常、网络分区、三态（成功、失败、超时）、节点故障CAP：2000.7，Erlc Brewer，ACM PODC (提出)     2002    MIT,Seth Gilbert, Nancy Lynch ;    P：网络分区容错性：         CP：一致性         AP：可用性BASE:    BA：基本可用(存在不可预知的故障时允许损失部分可用性)    S：软状态(允许接受一定时间延迟)    E：最终一致性        因果一致性、会话一致性、单调读一致性、单调写一致性、读已之所写一致性保证分布式系统的一致性协议：    2PC：2 Phase-Commit  请求和执行(先发请求会被堵塞，需要等最后请求才能开始第二阶段)    3PC：3 Phase-Commit  CanCommit-&gt;PreCommit--&gt;Docommit （只有法请求的在会被堵塞）    Paxos：Leslie Lamport ,1990年提出，    ETCD分布式协议    Google Chubby，分布式锁服务，GFS/BigTable都用到了chubby        分布式协作、元数据存储、Master选举；HDFS/HBase，Zookeeper    zookeeper是一个开源的分布式协调服务，由知名互联网公司Yahoo创建，它是Chubby的开源实现；zk是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于它实现数据的发布/订阅、负载均衡、名称服务、分布式协调/通知、集群管理、Master选举、分布式锁和分布式队列；通过ZK修改已订阅的机器的配置    基本概念：        集群角色：Leader，Follower，Observer            leader：选举产生，读/写；所有写都是以leader进行的            Follower：参与选举，可被选举，读服务；            Observer：参与选举，不可被选举，提供读服务；        会话：zk中，分布式中能协调，服务端和每一个客户都会建立一个TCP长连接一之存在，只有客户端出现宕机或者不参与分布式系统系统才会断掉            如果存在网络故障可以设置 sesslonTimeout        数据节点(ZNode)：即zk数据模型中的数据单元；zk的数据都存储于内存中，数据模型为树状结构(ZNode Tree);每个ZNode都会保存自己数据于内存中；            持节节点：仅显示删除才消失            临时节点：会话中止即自动消失        版本(version)：ZK会为每个ZNode维护一个称为Stat的数据结构，记录了当前的ZNode的三个数据版本            version：当前版本            cversion：当前ZNode的子节点的版本            aversion：当前ZNode的ACL的版本        ACL：ZK使用ACL机制进行权限控制             CREATE,READ,WRITE,DELETE,ADMIN        事件监听器(Watcher)：一次性的出发通知机制            ZK上，由用户指定的触发机制，在某些时间产生时，ZK能够将通知给相关的客户端；    ZAB协议：Zookeeper Atomic Broadcast,zk原子广播协议        支持崩溃恢复机制，保证leader崩溃后选取新的leader，而且要确保数据的完整性和一致性。        ZAB协议中存在三种状态：  ZK所有节点状态只会在这三个状态来回转换            (1)Looking，            (2)Following，            (3)Leading                当leading丢失所有节点会重新回到Looking状态，leader和follower有一个序列的心跳认证来确定存活状态        四个阶段：            选举：election            发现：discovery            同步：sync            广播：Broadcast    下载：http://zookeeper.apache.org        部署方式：单机模式、伪分布式模式、分布式模式    安装：        首先安装java        再看装zookeeper        tar -zxf zookeeper-*.tar.gz -C /usr/local        cd /usr/loacl        ln -s apache-zookeeper-3.5.5-bin zookeeper        cd zookeeper/conf        cp zoo_sample.cfg zoo.cfg    zoo.cfg配置文参数        基本配置文件：            tickTime 连接心态的时长单位为ms            initLimit  初始同步阶段需经过多少tickTime周期            syncLimit  发送请求阶段需经过多少tickTime周期            dataDir       数据目录，建议不放在/tmp目录下，机器重启后会丢失            clientPort    连接监听端口            maxClientCnxns    最大并发连接数            server.1=IP+PORT        存储配置：            preALLocSize：为十五日志预先分配的池畔空间量：默认65535KB            snapCount：每次多少次事务后执行一次快照操作；每事务的平均大小在100字节；            autopurget.snapRetainCount：            autopurge.purgeInterval：purge操作的时间间隔，0表示不启动；            fsync.warningthresholdms：zk进行事务日志fsync操作时消耗的时长报警阈值；            weight.X=N：判断quorum时投票权限，默认1；        网络配置：            maxClientCnxns：每个客户端IP的最大并发连接数            clientPortAddress：zk监听IP地址;            minSessionTimeout：            maxSessionTimeout：        集群配置：            initLimit：Follower连入Leader并完成数据同步的时长；            syncLimit：心跳检测的最大延迟；            leaderServes：默认zk的leader接收读写请求，额外还要负责协调各Follower发来的事务等；因此，为使得leader几种处理zk集群内部信息，建议不让leader直接提供服务；            cnxTimeout：leader选举期间，各服务器创建TCP连接的超时时长；            ellectialg：选举算法，目前仅支持FastLeaderElection算法一种；            server.id=[hostname]:port:port[:observer]                集群内各服务器的属性参数                    第一个port：follower与leader    zoo.cfg配置参数：        titckTime=2000        dataDir=/dta/zookeeper        ClientPort=2181        initLimit=5        syncLimit=2        指定主机的语法格式：            server.ID=IP:port:port                ID:各主机的数字标识，一般从1开始                IP:各主机的IP    集群搭建        在zoo.cfg配置的dataDir目录下建一个myid文件输入一个数字        例如： echo 1 &gt; /tmp/zookeeper/myid    服务启停/zookeeper/bin/zkServer.sh        ./zkServer.sh start        ./zkServer.sh stop        ./zkServer.sh -h  查看帮助    连接        ./zkCli.sh        连接后敲？ 列出帮助    节点信息：stat        cZxid  创建得事务id        ctime  创建时间        mZxid  最近更新该事务得id        mtime  进行更新时间        pZxid  该节点的子节点列表更新id        cversion 子节点版本号        dataVersion     数据版本号        aclVersion    acl版本号        ephemeralOwner    创建该临时节点的会话id        datalength    数据长度        numChildren    子节点的个数        版本号在zk其实是表示相关数据的修改次数，乐观并发，乐观锁，修改是如果又数据会导致回滚    zkCli命令：        create，ls，ls2，stat，delete，rmr，get，set，.....    监控zk的四字命令：        ruok，stat，srvr，conf，cons,wchs,envi ....    zoo.cfga</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开源软件 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> zookeeper </tag>
+            
+            <tag> 集群 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2019/07/25/hello-world/"/>
+      <url>/2019/07/25/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>test</title>
+      <link href="/2019/07/14/test/"/>
+      <url>/2019/07/14/test/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> Category1 </category>
+          
+          <category> Category2 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Tag1 </tag>
+            
+            <tag> Tag2 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>（标题）</title>
+      <link href="/2017/05/26/redis/"/>
+      <url>/2017/05/26/redis/</url>
+      
+        <content type="html"><![CDATA[<p>DB热度排名：<br><a href="https://db-engines.com/en/" target="_blank" rel="noopener">https://db-engines.com/en/</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> （分类） </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> （标签1） </tag>
+            
+            <tag> （标签2） </tag>
+            
+            <tag> （标签3） </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
