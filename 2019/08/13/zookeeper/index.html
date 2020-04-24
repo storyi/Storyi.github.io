@@ -11,11 +11,10 @@
     <meta name="google" content="notranslate">
     <meta name="keywords" content="TriDiamond Obsidian,"> 
     <meta name="description" content="Zookeeper：
+
 分布式系统：是一个硬件或软件组建分布在网络中的不同计算机之上，彼此间仅通过消息传递进行通信和协作的系统
 
-特性：
-    分布式、对等性、并发性、缺乏全局时钟、故障必然会发生
-,"> 
+特性：        分布式、对等性、并发性、缺乏全局时钟、故障必然,"> 
     <meta name="author" content="Storyi"> 
     <link rel="alternative" href="atom.xml" title="Storyi blog" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -90,7 +89,7 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    4.6k
+                    4.8k
                 </span>
                 
                 
@@ -100,11 +99,11 @@
                 </span>
                 
                 
-                
-                <span id="busuanzi_container_page_pv">
+                <span id="/2019/08/13/zookeeper/" class="leancloud_visitors" data-flag-title="zookeeper">
                     <b class="iconfont icon-read"></b> <i>阅读次数</i>
-                    <span id="busuanzi_value_page_pv">0</span>
+                    <span class="leancloud-visitors-count">1000000</span>
                 </span>
+                
                 
             </p>
             
@@ -131,15 +130,14 @@
     <div class='main'>
         <div class="content markdown animated fadeIn">
             <p>Zookeeper：</p>
-<pre><code>分布式系统：是一个硬件或软件组建分布在网络中的不同计算机之上，彼此间仅通过消息传递进行通信和协作的系统
-
-特性：
-    分布式、对等性、并发性、缺乏全局时钟、故障必然会发生
-
-典型问题    
-    通信异常、网络分区、三态（成功、失败、超时）、节点故障
-
-CAP：2000.7，Erlc Brewer，ACM PODC (提出)
+<blockquote>
+<p>分布式系统：<code>是一个硬件或软件组建分布在网络中的不同计算机之上，彼此间仅通过消息传递进行通信和协作的系统</code></p>
+</blockquote>
+<pre><code>特性：</code></pre><pre><code class="python">        分布式、对等性、并发性、缺乏全局时钟、故障必然会发生</code></pre>
+<pre><code>典型问题    </code></pre><blockquote>
+<p>通信异常、网络分区、三态（成功、失败、超时）、节点故障</p>
+</blockquote>
+<pre><code>CAP：2000.7，Erlc Brewer，ACM PODC (提出)
      2002    MIT,Seth Gilbert, Nancy Lynch ;
 
     P：网络分区容错性：
@@ -236,13 +234,11 @@ HDFS/HBase，Zookeeper
             fsync.warningthresholdms：zk进行事务日志fsync操作时消耗的时长报警阈值；
             weight.X=N：判断quorum时投票权限，默认1；
 
-        网络配置：
-            maxClientCnxns：每个客户端IP的最大并发连接数
-            clientPortAddress：zk监听IP地址;
-            minSessionTimeout：
-            maxSessionTimeout：
-
-        集群配置：
+        网络配置：</code></pre><pre><code class="shell">                maxClientCnxns：每个客户端IP的最大并发连接数
+                clientPortAddress：zk监听IP地址;
+                minSessionTimeout：
+                maxSessionTimeout：</code></pre>
+<pre><code>        集群配置：
             initLimit：Follower连入Leader并完成数据同步的时长；
             syncLimit：心跳检测的最大延迟；
             leaderServes：默认zk的leader接收读写请求，额外还要负责协调各Follower发来的事务等；因此，为使得leader几种处理zk集群内部信息，建议不让leader直接提供服务；
@@ -318,18 +314,7 @@ HDFS/HBase，Zookeeper
             
             
             
-    <div id='gitalk-container' class="comment link"
-        data-ae='true'
-        data-ci='c6e9a94f0dcaa293f0db'
-        data-cs='3c260a35f71d7de265dd928b6bb01c621d402a11'
-        data-r='blog-comments'
-        data-o='Storyi'
-        data-a='Storyi'
-        data-d=''
-    >留言</div>
-
-
-            
+            <div id="vcomments"></div>
             
         </div>
         <div class="sidebar">
@@ -441,9 +426,6 @@ HDFS/HBase，Zookeeper
 </script>
 
 
-
-    <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
-    <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="/js/plugin.js"></script>
@@ -574,6 +556,38 @@ HDFS/HBase，Zookeeper
     }
 </script>
 
+
+    <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-CN';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'vkFlPU036PPbnsJgxDvXBysa-gzGzoHsz',
+                appKey: 'YwItB3DoDJe74dsyzYsBn4kh',
+                notify: 'false',
+                verify: 'false',
+                avatar: 'mp',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
 
 
 

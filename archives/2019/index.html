@@ -68,16 +68,15 @@
                                         <a class="timeline-title" target="_self" href="/2019/08/13/zookeeper/">zookeeper</a>
                                         <p>
                                             Zookeeper：
+
 分布式系统：是一个硬件或软件组建分布在网络中的不同计算机之上，彼此间仅通过消息传递进行通信和协作的系统
 
-特性：
-    分布式、对等性、并发性、缺乏全局时钟、故障必然会发生
-
+特性：        分布式、对等性、并发性、缺乏全局时钟、故障必然会发生
 典型问题    
-    通信异常、网络分区、三态（成功、失败、超时）、节点故障
+通信异常、网络分区、三态（成功、失败、超时）、节点故障
 
 CAP：2000.7，Erlc Brewer，ACM PODC (提出)
-     2002    MIT,S...
+     2002    MIT,Se...
                                         </p>
                                     </div>
                                 </li>
@@ -229,9 +228,6 @@ Qu...
 
 
 
-    <link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
-    <script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="/js/plugin.js"></script>
 <script src="/js/obsidian.js"></script>
@@ -361,6 +357,38 @@ Qu...
     }
 </script>
 
+
+    <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+    <script>
+
+        var valine = new Valine();
+
+        function initValine(path) {
+            if (!path) path = window.location.pathname;
+            let language = 'zh-CN';
+            if (!language) {
+                language = 'en';
+            } else {
+                language = language.toLowerCase();
+            }
+            valine.init({
+                el: '#vcomments',
+                appId: 'vkFlPU036PPbnsJgxDvXBysa-gzGzoHsz',
+                appKey: 'YwItB3DoDJe74dsyzYsBn4kh',
+                notify: 'false',
+                verify: 'false',
+                avatar: 'mp',
+                placeholder: 'Leave your throughs behind~',
+                visitor: 'true',
+                path: path,
+                lang: language
+            });
+        }
+
+        $(document).ready(function () {
+            initValine();
+        });
+    </script>
 
 
 
