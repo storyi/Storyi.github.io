@@ -176,15 +176,15 @@ cp zoo_sample.cfg zoo.cfg</code></pre>
 </blockquote>
 <p>存储配置：</p>
 <blockquote>
-<p><code>preALLocSize</code>：为十五日志预先分配的池畔空间量：默认65535KB<br><code>snapCount</code>：每次多少次事务后执行一次快照操作；每事务的平均大小在100字节；<br><code>autopurget.snapRetainCount</code>：<br><code>autopurge.purgeInterval</code>：purge操作的时间间隔，0表示不启动；<br><code>fsync.warningthresholdms</code>：zk进行事务日志fsync操作时消耗的时长报警阈值；<br><code>weight.X=N</code>：判断quorum时投票权限，默认1；</p>
+<p><code>preALLocSize</code> 为十五日志预先分配的池畔空间量：默认65535KB<br><code>snapCount</code> 每次多少次事务后执行一次快照操作；每事务的平均大小在100字节；<br><code>autopurget.snapRetainCount</code><br><code>autopurge.purgeInterval</code> purge操作的时间间隔，0表示不启动；<br><code>fsync.warningthresholdms</code> zk进行事务日志fsync操作时消耗的时长报警阈值；<br><code>weight.X=N</code> 判断quorum时投票权限，默认1；</p>
 </blockquote>
 <p>网络配置：</p>
 <blockquote>
-<p><code>maxClientCnxns</code>：每个客户端IP的最大并发连接数<br><code>clientPortAddress</code>：zk监听IP地址;<br><code>minSessionTimeout</code>：</p>
+<p><code>maxClientCnxns</code> 每个客户端IP的最大并发连接数<br><code>clientPortAddress</code> zk监听IP地址;<br><code>minSessionTimeout</code></p>
 </blockquote>
 <p>集群配置：</p>
 <blockquote>
-<p><code>initLimit</code>：Follower连入Leader并完成数据同步的时长；<br><code>syncLimit</code>：心跳检测的最大延迟；<br><code>leaderServes</code>：默认zk的leader接收读写请求，额外还要负责协调各Follower发来的事务等；因此，为使得leader几种处理zk集群内部信息，建议不让leader直接提供服务；<br><code>cnxTimeout</code>：leader选举期间，各服务器创建TCP连接的超时时长；<br><code>ellectialg</code>：选举算法，目前仅支持FastLeaderElection算法一种；<br><code>server.id=[hostname]:port:port[:observer]</code><br>集群内各服务器的属性参数:<code>第一个port</code>：follower与leader</p>
+<p><code>initLimit</code> Follower连入Leader并完成数据同步的时长；<br><code>syncLimit</code> 心跳检测的最大延迟；<br><code>leaderServes</code> 默认zk的leader接收读写请求，额外还要负责协调各Follower发来的事务等；因此，为使得leader几种处理zk集群内部信息，建议不让leader直接提供服务；<br><code>cnxTimeout</code> leader选举期间，各服务器创建TCP连接的超时时长；<br><code>ellectialg</code> 选举算法，目前仅支持FastLeaderElection算法一种；<br><code>server.id=[hostname]:port:port[:observer]</code><br>集群内各服务器的属性参数: <code>第一个port</code> follower与leader</p>
 </blockquote>
 <h3 id="zoo-cfg参数设置"><a href="#zoo-cfg参数设置" class="headerlink" title="zoo.cfg参数设置"></a>zoo.cfg参数设置</h3><pre><code class="bash">titckTime=2000
 dataDir=/dta/zookeeper
