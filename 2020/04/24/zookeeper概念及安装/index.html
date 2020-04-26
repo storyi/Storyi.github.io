@@ -85,13 +85,13 @@
                 
                 <span>
                     <b class="iconfont icon-text2"></b> <i>文章字数</i>
-                    6.1k
+                    6k
                 </span>
                 
                 
                 <span>
                     <b class="iconfont icon-timer__s"></b> <i>阅读约需</i>
-                    6 mins.
+                    5 mins.
                 </span>
                 
                 
@@ -126,7 +126,7 @@
     <div class='main'>
         <div class="content markdown animated fadeIn">
             <h3 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h3><p><code>zookeeper是一个开源的分布式协调服务，由知名互联网公司Yahoo创建，它是Chubby的开源实现；zk是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于它实现数据的发布/订阅、负载均衡、名称服务、分布式协调/通知、集群管理、Master选举、分布式锁和分布式队列；通过ZK修改已订阅的机器的配置</code></p>
-<h3 id="基本概念："><a href="#基本概念：" class="headerlink" title="基本概念："></a>基本概念：</h3><p>集群角色：<code>Leader</code>，<code>Follower</code>，<code>Observer</code></p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>集群角色：<code>Leader</code>，<code>Follower</code>，<code>Observer</code></p>
 <blockquote>
 <p>leader：选举产生，读/写；所有写都是以leader进行的<br>Follower：参与选举，可被选举，读服务；<br>Observer：参与选举，不可被选举，提供读服务；</p>
 </blockquote>
@@ -162,8 +162,8 @@
 <blockquote>
 <p>选举：election<br>发现：discovery<br>同步：sync<br>广播：Broadcast</p>
 </blockquote>
-<h3 id="下载："><a href="#下载：" class="headerlink" title="下载："></a>下载：</h3><p><a href="http://zookeeper.apache.org" target="_blank" rel="noopener">http://zookeeper.apache.org</a><br>部署方式：单机模式、伪分布式模式、分布式模式</p>
-<h3 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h3><pre><code class="bash">首先安装java
+<h3 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h3><p><a href="http://zookeeper.apache.org" target="_blank" rel="noopener">http://zookeeper.apache.org</a><br>部署方式：单机模式、伪分布式模式、分布式模式</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code class="bash">首先安装java
 再看装zookeeper
 tar -zxf zookeeper-*.tar.gz -C /usr/local
 cd /usr/loacl
@@ -186,7 +186,7 @@ cp zoo_sample.cfg zoo.cfg</code></pre>
 <blockquote>
 <p><code>initLimit</code>：Follower连入Leader并完成数据同步的时长；<br><code>syncLimit</code>：心跳检测的最大延迟；<br><code>leaderServes</code>：默认zk的leader接收读写请求，额外还要负责协调各Follower发来的事务等；因此，为使得leader几种处理zk集群内部信息，建议不让leader直接提供服务；<br><code>cnxTimeout</code>：leader选举期间，各服务器创建TCP连接的超时时长；<br><code>ellectialg</code>：选举算法，目前仅支持FastLeaderElection算法一种；<br><code>server.id=[hostname]:port:port[:observer]</code><br>集群内各服务器的属性参数:<code>第一个port</code>：follower与leader</p>
 </blockquote>
-<h3 id="zoo-cfg参数设置："><a href="#zoo-cfg参数设置：" class="headerlink" title="zoo.cfg参数设置："></a>zoo.cfg参数设置：</h3><pre><code class="bash">titckTime=2000
+<h3 id="zoo-cfg参数设置"><a href="#zoo-cfg参数设置" class="headerlink" title="zoo.cfg参数设置"></a>zoo.cfg参数设置</h3><pre><code class="bash">titckTime=2000
 dataDir=/dta/zookeeper
 ClientPort=2181
 initLimit=5
@@ -213,7 +213,7 @@ syncLimit=2</code></pre>
 </blockquote>
 <h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><p>zkCli命令：<br><code>create</code>，<code>ls</code>，<code>ls2</code>，<code>stat</code>，<code>delete</code>，<code>rmr</code>，<code>get</code>，<code>set</code>，…..</p>
 <p>监控zk的四字命令：<br><code>ruok</code>，<code>stat</code>，<code>srvr</code>，<code>conf</code>，<code>cons</code>, <code>wchs</code>, <code>envi</code>, ….</p>
-<h3 id="典型问题"><a href="#典型问题" class="headerlink" title="典型问题:"></a>典型问题:</h3><p>通信异常、网络分区、三态（成功、失败、超时）、节点故障<br>CAP：</p>
+<h3 id="典型问题"><a href="#典型问题" class="headerlink" title="典型问题"></a>典型问题</h3><p>通信异常、网络分区、三态（成功、失败、超时）、节点故障<br>CAP：</p>
 <blockquote>
 <p>P：网络分区容错性：</p>
 <blockquote>
@@ -278,7 +278,7 @@ syncLimit=2</code></pre>
             <div class="box sticky animated fadeInRight faster">
                 <div id="toc" class="subbox">
                     <h4>目录</h4>
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zookeeper"><span class="toc-number">1.</span> <span class="toc-text">Zookeeper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念："><span class="toc-number">2.</span> <span class="toc-text">基本概念：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载："><span class="toc-number">3.</span> <span class="toc-text">下载：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装："><span class="toc-number">4.</span> <span class="toc-text">安装：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zoo-cfg配置文件"><span class="toc-number">5.</span> <span class="toc-text">zoo.cfg配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zoo-cfg参数设置："><span class="toc-number">6.</span> <span class="toc-text">zoo.cfg参数设置：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令"><span class="toc-number">7.</span> <span class="toc-text">命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#典型问题"><span class="toc-number">8.</span> <span class="toc-text">典型问题:</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Zookeeper"><span class="toc-number">1.</span> <span class="toc-text">Zookeeper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基本概念"><span class="toc-number">2.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载"><span class="toc-number">3.</span> <span class="toc-text">下载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">4.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zoo-cfg配置文件"><span class="toc-number">5.</span> <span class="toc-text">zoo.cfg配置文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#zoo-cfg参数设置"><span class="toc-number">6.</span> <span class="toc-text">zoo.cfg参数设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令"><span class="toc-number">7.</span> <span class="toc-text">命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#典型问题"><span class="toc-number">8.</span> <span class="toc-text">典型问题</span></a></li></ol>
                 </div>
             </div>
             
